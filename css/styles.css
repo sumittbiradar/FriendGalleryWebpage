@@ -193,3 +193,26 @@ footer p {
 .friend-img:hover {
     transform: scale(1.1); /* Enlarge image slightly */
 }
+/* Style for the flip container */
+.flip-container {
+    perspective: 1000px; /* Add perspective for the 3D effect */
+}
+
+/* Style for the image that will flip */
+.flip-image {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.6s; /* Smooth flip transition */
+    cursor: pointer;
+    transform-style: preserve-3d; /* Allow 3D transformations */
+}
+
+/* Add back of the image */
+.flip-container:hover .flip-image {
+    transform: rotateY(180deg); /* Flip on hover */
+}
+
+/* Style the back of the image */
+.flip-container .flip-image {
+    backface-visibility: hidden; /* Hide the back side when flipped */
+}
