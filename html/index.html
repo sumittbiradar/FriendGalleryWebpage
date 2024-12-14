@@ -16,8 +16,8 @@
     <main>
         <div id="random-photo">
             <h2>Today's Memory</h2>
-            <!-- Image will be randomly selected here -->
-            <img id="group-photo" src="../images/default.JPG" alt="Random Group Photo">
+                        <!-- Image will be randomly selected here -->
+                        <img id="group-photo" src="../images/default.JPG" alt="Random Group Photo">
         </div>
         
         <div id="friend-gallery">
@@ -26,34 +26,59 @@
             <!-- Add your friend's thumbnail images like before, with the same method -->
         </div>
         <!-- Inside your <div id="friend-gallery">, where the friend names and images are listed: -->
-<div id="friend-names">
-    <div class="friend" onclick="showFriendImages('sachin')">
-        <img src="../images/faces/sachin.png" alt="Sachin" class="friend-image">
-        <div class="friend-details">
-            <p class="friend-name">Sachin</p>
-            <p>MinorHunter</p>
-            <p>Status: prbly w a minor</p>
-        </div>
-    </div>
-    <div class="friend" onclick="showFriendImages('sid')">
-        <img src="../images/faces/Sid.png" alt="Siddharth" class="friend-image">
-        <div class="friend-details">
-            <p class="friend-name">Siddharth</p>
-            <p>GYM FREAK</p>
-            <p>Status: Situationship with...</p>
-        </div>
-    </div>
-    <div class="friend" onclick="showFriendImages('darshan')">
-        <img src="../images/faces/Darshan.png" alt="Darshan" class="friend-image">
-        <div class="friend-details">
-            <p class="friend-name">Darshan</p>
-            <p>The intelligent one hehe</p>
-            <p>Status: Single Af</p>
-        </div>
-    </div>
-</div>
-
+            <div id="friend-names">
+                <div class="friend" onclick="showFriendImages('sachin')">
+                    <img src="../images/faces/sachin.png" alt="Sachin" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Sachin</p>
+                        <p>MinorHunter</p>
+                        <p>Status: prbly w a minor</p>
+                    </div>
+                </div>
+                <div class="friend" onclick="showFriendImages('sid')">
+                    <img src="../images/faces/Sid.png" alt="Siddharth" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Siddharth</p>
+                        <p>GYM FREAK</p>
+                        <p>Status: Situationship with...</p>
+                    </div>
+                </div>
+                <div class="friend" onclick="showFriendImages('darshan')">
+                    <img src="../images/faces/Darshan.png" alt="Darshan" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Darshan</p>
+                        <p>The intelligent one hehe</p>
+                        <p>Status: Single Af</p>
+                    </div>
+                </div>
+                <!-- New friends -->
+                <div class="friend" onclick="showFriendImages('shirish')">
+                    <img src="../images/faces/Shirish.png" alt="Shirish" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Shirish</p>
+                        <p>Well well well</p>
+                        <p>Status: No one knows(Not even him)</p>
+                    </div>
+                </div>
+                <div class="friend" onclick="showFriendImages('anil')">
+                    <img src="../images/faces/Anil.png" alt="Anil" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Anil</p>
+                        <p>The Mansik</p>
+                        <p>Status: hearthbroken(there was no relationship to begin with so..)</p>
+                    </div>
+                </div>
+                <div class="friend" onclick="showFriendImages('other')">
+                    <img src="../images/faces/Prajwal.png" alt="Other" class="friend-image">
+                    <div class="friend-details">
+                        <p class="friend-name">Prajwal</p>
+                        <p>Mansik+1</p>
+                        <p>Status: Mysterious(who am i kidding, single)...</p>
+                    </div>
+                </div>
+            </div>
 <!-- Add a new section for each friend's images that will appear when clicked: -->
+<!-- New sections for their images -->
 <div id="friend-gallery">
     <h2>Click on a Friend</h2>
 
@@ -83,10 +108,35 @@
             <img src="../images/darshan_image3.jpg" alt="Darshan Image 3" class="friend-img">
         </div>
     </div>
+
+    <!-- Shirish's Images -->
+    <div id="shirish-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/shirish/shirish1.jpg" alt="Shirish Image 1" class="friend-img">
+            <img src="../images/shirish/shirish2.jpg" alt="Shirish Image 2" class="friend-img">
+            <img src="../images/shirish/shirish3.jpg" alt="Shirish Image 3" class="friend-img">
+        </div>
+    </div>
+
+    <!-- Anil's Images -->
+    <div id="anil-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/anil/anil1.jpg" alt="Anil Image 1" class="friend-img">
+            <img src="../images/anil/anil2.jpg" alt="Anil Image 2" class="friend-img">
+            <img src="../images/anil/anil3.jpg" alt="Anil Image 3" class="friend-img">
+        </div>
+    </div>
+
+    <!-- Other's Images -->
+    <div id="other-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/other/other1.jpg" alt="Other Image 1" class="friend-img">
+            <img src="../images/other/other2.jpg" alt="Other Image 2" class="friend-img">
+            <img src="../images/other/other3.jpg" alt="Other Image 3" class="friend-img">
+        </div>
+    </div>
 </div>
 
-
-        
         </div>
         
     </main>
