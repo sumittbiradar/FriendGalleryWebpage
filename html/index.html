@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Nostalgia</title>
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>A Walk Down Memory Lane</h1>
+    </header>
+    <main>
+        <div id="random-photo">
+            <h2>Today's Memory</h2>
+            <!-- Image will be randomly selected here -->
+            <img id="group-photo" src="../images/default.JPG" alt="Random Group Photo">
+        </div>
+        
+        <div id="friend-gallery">
+            <h2>Click on a Friend</h2>
+            <!-- Friend thumbnails will go here -->
+            <!-- Add your friend's thumbnail images like before, with the same method -->
+        </div>
+        <!-- Inside your <div id="friend-gallery">, where the friend names and images are listed: -->
+<div id="friend-names">
+    <div class="friend" onclick="showFriendImages('sachin')">
+        <img src="../images/faces/sachin.png" alt="Sachin" class="friend-image">
+        <div class="friend-details">
+            <p class="friend-name">Sachin</p>
+            <p>MinorHunter</p>
+            <p>Status: prbly w a minor</p>
+        </div>
+    </div>
+    <div class="friend" onclick="showFriendImages('sid')">
+        <img src="../images/faces/Sid.png" alt="Siddharth" class="friend-image">
+        <div class="friend-details">
+            <p class="friend-name">Siddharth</p>
+            <p>GYM FREAK</p>
+            <p>Status: Situationship with...</p>
+        </div>
+    </div>
+    <div class="friend" onclick="showFriendImages('darshan')">
+        <img src="../images/faces/Darshan.png" alt="Darshan" class="friend-image">
+        <div class="friend-details">
+            <p class="friend-name">Darshan</p>
+            <p>The intelligent one hehe</p>
+            <p>Status: Single Af</p>
+        </div>
+    </div>
+</div>
+
+<!-- Add a new section for each friend's images that will appear when clicked: -->
+<div id="friend-gallery">
+    <h2>Click on a Friend</h2>
+
+    <!-- Sachin's Images -->
+    <div id="sachin-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/sachin/sachin2.png" alt="Sachin Image 1" class="friend-img">
+            <img src="../images/sachin/sachin3.png" alt="Sachin Image 2" class="friend-img">
+            <img src="../images/sachin/sachin4.png" alt="Sachin Image 3" class="friend-img">
+        </div>
+    </div>
+
+    <!-- Siddharth's Images -->
+    <div id="sid-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/sid_image1.jpg" alt="Siddharth Image 1" class="friend-img">
+            <img src="../images/sid_image2.jpg" alt="Siddharth Image 2" class="friend-img">
+            <img src="../images/sid_image3.jpg" alt="Siddharth Image 3" class="friend-img">
+        </div>
+    </div>
+
+    <!-- Darshan's Images -->
+    <div id="darshan-images" class="friend-images">
+        <div class="friend-image-container">
+            <img src="../images/darshan_image1.jpg" alt="Darshan Image 1" class="friend-img">
+            <img src="../images/darshan_image2.jpg" alt="Darshan Image 2" class="friend-img">
+            <img src="../images/darshan_image3.jpg" alt="Darshan Image 3" class="friend-img">
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+        
+    </main>
+    <footer>
+        <p>Created with ❤️ for memories</p>
+    </footer>
+
+    <!-- JavaScript to load a random image -->
+    <script>
+        // Array of image filenames in the 'images' folder (adjust this based on your file names)
+        const images = ['default.JPG', 'default1.JPG', 'default2.JPG', 'default3.JPG', 'default4.JPG', 'default5.JPG', 'default6.JPG', 'default7.JPG', 'default8.JPG']; // Add your image names here, 'default2.JPG'
+
+        // Function to randomly select an image
+        function getRandomImage() {
+            const randomIndex = Math.floor(Math.random() * images.length); // Select a random index
+            return `../images/${images[randomIndex]}`; // Return the path to the image
+        }
+
+        // Set the random image to the img element when the page loads
+        document.getElementById('group-photo').src = getRandomImage();
+        function showFriendImages(friend) {
+            // Hide all friend images
+            const allFriendImages = document.querySelectorAll('.friend-images');
+            allFriendImages.forEach(function(imageContainer) {
+                imageContainer.style.display = 'none';
+            });
+        
+            // Show the selected friend's images
+            const friendImages = document.getElementById(friend + '-images');
+            friendImages.style.display = 'block';
+        
+            // Apply the sliding effect
+            const friendImagesContainer = document.getElementById('friend-images');
+            friendImagesContainer.classList.add('slide');
+            // Function to handle image click (magnify the image)
+let images = document.querySelectorAll('.friend-img');
+images.forEach(image => {
+    image.addEventListener('click', function() {
+        // Add the magnified class to the clicked image
+        image.classList.add('magnified');
+
+        // Prevent other images from being clicked while one is magnified
+        document.body.style.overflow = 'hidden'; // Disable scrolling
+
+        // Add a click event to close the magnified image when clicked outside
+        image.addEventListener('click', function() {
+            // Remove the magnified class and enable scrolling
+            image.classList.remove('magnified');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+    });
+});
+
+        }
+        
+    </script>
+    
+</body>
+</html>

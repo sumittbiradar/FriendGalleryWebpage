@@ -1,0 +1,195 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling with an Aesthetic Background */
+body {
+    background: linear-gradient(to right, #ffafbd, #ffc3a0); /* Soft pastel gradient background */
+    font-family: 'Poppins', sans-serif; /* Aesthetic font from Google Fonts */
+    color: #333; /* Default text color */
+    text-align: center;
+}
+
+/* Set a background for the header */
+header {
+    background: transparent; /* No background color for header */
+    color: #333; /* Subtle dark color for text */
+    padding: 50px 0; /* Add padding for spacing */
+}
+
+header h1 {
+    font-size: 3em; /* Larger font size */
+    font-family: 'Lora', serif; /* Elegant, more relaxed font */
+    color: #6a4f4b; /* Subtle dark color */
+    margin-bottom: 0;
+}
+
+/* Styling for the main content */
+main {
+    padding: 30px 10%;
+}
+
+/* Style for the image in the random photo section */
+#random-photo img {
+    width: 80%; /* Make the image take up 80% of the page width */
+    max-width: 600px; /* Limit the maximum width */
+    border-radius: 10px; /* Add rounded corners to the image */
+    margin: 20px 0; /* Add some space around the image */
+}
+
+/* Style for the friend gallery section */
+#friend-gallery {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    gap: 20px; /* Add space between the thumbnails */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+#friend-gallery img {
+    width: 100px; /* Each thumbnail image will be 100px wide */
+    height: 100px; /* 100px tall */
+    object-fit: cover; /* Ensure the images cover the space without distortion */
+    border-radius: 50%; /* Make the thumbnails circular */
+    cursor: pointer; /* Make the thumbnails clickable */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+#friend-gallery img:hover {
+    transform: scale(1.1); /* Slightly enlarge the image when hovered */
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333; /* Dark background for the footer */
+    color: white; /* White text color */
+    padding: 10px 0; /* Padding around the footer text */
+    text-align: center; /* Center the footer text */
+}
+
+footer p {
+    font-size: 0.9em; /* Smaller font size for the footer text */
+}
+
+/* New section for the friend details */
+#friend-names {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Friend image container styling */
+.friend {
+    text-align: center;
+    margin: 0 20px;
+    position: relative; /* Necessary for positioning the details box */
+}
+
+.friend-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.friend-name {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.friend-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* The transparent box to show details */
+.friend-details {
+    position: absolute;
+    top: -30px; /* Position above the circle */
+    left: 120%; /* Position to the right of the circle */
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.6); /* Transparent background */
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    visibility: hidden; /* Hidden when not hovered */
+    z-index: 10; /* Ensure it shows above other content */
+}
+
+/* On hover, show the details */
+.friend:hover .friend-details {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Optional: Styling the text within the details box */
+.friend-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.friend-details .friend-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f0f0f0; /* Light color for the name */
+}
+
+/* Hide all friend images by default */
+.friend-images-container {
+    display: none;
+    overflow: hidden;
+    width: 100%;
+    transition: all 0.5s ease-in-out; /* For smooth sliding */
+}
+
+/* When the class 'slide' is added to the container, show the images with a slide effect */
+.friend-images-container.slide {
+    display: block;
+    transform: translateX(0);
+}
+
+/* Each friend's image container */
+.friend-images {
+    display: none; /* Hidden by default */
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.friend-images img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+/* New section for the rectangular image grid */
+.friend-image-container {
+    display: flex; /* Arrange images in a row */
+    justify-content: space-between; /* Evenly space the images */
+    align-items: center; /* Vertically align images */
+    width: 100%; /* Full width of the container */
+    padding: 20px; /* Padding around the container */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+/* Make images rectangular */
+.friend-img {
+    width: 30%; /* Images take 30% of the container width */
+    height: 200px; /* Ensure a fixed height for all images */
+    object-fit: cover; /* Make sure the image covers the container space without distortion */
+    border-radius: 0px; /* Remove circular styling (this is key to fixing the circular issue) */
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth magnification on hover */
+}
+
+/* Add hover effect to enlarge the image */
+.friend-img:hover {
+    transform: scale(1.1); /* Enlarge image slightly */
+}
