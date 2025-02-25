@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Nostalgia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        .friend-image-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .friend-img {
+            width: 30%;
+            height: 0;
+            padding-bottom: 30%; /* Maintain square aspect ratio */
+            background-color: #f0f0f0; /* Optional: Background color for loading */
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .friend-img:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>A Walk Down Memory Lane</h1>
+    </header>
+    <main>
+        <div id="friend-names">
+            <div class="friend" onclick="showFriendImages('sachin')">
+                <img src="../images/faces/sachin.png" alt="Sachin" class="friend-image">
+                <div class="friend-details">
+                    <p class="friend-name">Sachin</p>
+                </div>
+            </div>
+            <!-- Add more friends here -->
+        </div>
+
+        <!-- Sachin's Images -->
+        <div id="sachin-images" class="friend-images" style="display: none;">
+            <div class="friend-image-container">
+                <img src="../images/sachin/sachin2.png" alt="Sachin Image 1" class="friend-img" onclick="zoomImage(this)">
+                <img src="../images/sachin/sachin3.png" alt="Sachin Image 2" class="friend-img" onclick="zoomImage(this)">
+                <img src="../images/sachin/sachin4.png" alt="Sachin Image 3" class="friend-img" onclick="zoomImage(this)">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Created with ❤️ for memories</p>
+    </footer>
+
+    <script>
+        function showFriendImages(friend) {
+            // Hide all friend images
+            const allFriendImages = document.querySelectorAll('.friend-images');
+            allFriendImages.forEach(function(imageContainer) {
+                imageContainer.style.display = 'none';
+            });
+
+            // Show the selected friend's images
+            const friendImages = document.getElementById(friend + '-images');
+            friendImages.style.display = 'block';
+        }
+
+        function zoomImage(image) {
+            // Create a modal element
+            const modal = document.createElement('div');
+            modal.classList.add('modal');
+
+            // Create an image element for the modal
+            const modalImg = document.createElement('img');
+            modalImg.src = image.src; // Set the source to the clicked image
+            modalImg.classList.add('modal-content');
+
+            // Append the image to the modal
+            modal.appendChild(modalImg);
+
+            // Append the modal to the body
+            document.body.appendChild(modal);
+
+            // Close the modal when clicked
+            modal.onclick = function() {
+                document.body.removeChild(modal);
+            };
+        }
+    </script>
+</body>
+</html>
