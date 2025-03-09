@@ -57,6 +57,7 @@ header {
     background: transparent;
     padding: 50px 0;
     animation: floatIn 1s ease-out;
+    position: relative;
 }
 
 header h1 {
@@ -67,6 +68,92 @@ header h1 {
     margin-bottom: 10px;
 }
 
+/* F.R.I.E.N.D.S Button Styling */
+.friends-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.friends-button:hover {
+    transform: translateY(-2px);
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.friends-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.button-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.button-text span {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+.button-text span:first-child {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.button-text span:last-child {
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+/* Add colorful dots between letters */
+.button-text span:first-child {
+    position: relative;
+}
+
+.button-text span:first-child::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        #ff6b6b,
+        #4ecdc4,
+        #45b7d1,
+        #96ceb4,
+        #ffeead,
+        #ff6b6b
+    );
+}
+
+@media (max-width: 768px) {
+    .friends-button {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin: 0 auto 20px;
+        width: fit-content;
+    }
+}
+
 /* Styling for the main content */
 main {
     padding: 30px 10%;
@@ -74,17 +161,22 @@ main {
 }
 
 /* Style for the image in the random photo section */
+#random-photo h2 {
+    font-size: 2.2em;
+    margin: 20px auto;
+    text-align: center;
+    font-family: 'Lora', serif;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
 #random-photo img {
     width: 100%;
     max-width: 500px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    animation: glowPulse 3s infinite;
-}
-
-#random-photo img:hover {
-    transform: scale(1.03) rotate(1deg);
+    animation: multiColorGlow 8s infinite;
 }
 
 /* Style for the friend gallery section */
@@ -131,18 +223,17 @@ footer p:hover {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 80px;  /* Increased spacing between icons */
     padding: 20px;
-    position: relative;
-    z-index: 2;
 }
 
 /* Friend image container styling */
 .friend {
     position: relative;
     cursor: pointer;
-    width: 120px;
-    margin: 10px;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
 }
 
 .friend-image {
@@ -150,39 +241,41 @@ footer p:hover {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 2;
+    transition: transform 0.5s ease;
 }
 
 /* Hover details box */
 .friend-details {
     position: absolute;
-    left: calc(100% + 10px);  /* Position to the right of the image */
-    top: 50%;
-    transform: translateY(-50%);
+    left: 100%;
+    top: -120%;  /* This ensures it starts at the same height as the icon */
+    margin-left: 20px;
     width: 200px;
     background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.85);  /* Made the background more transparent */
+
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 15px;
     border-radius: 8px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.5s ease;
     z-index: 1000;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
 }
 
 /* Show details on hover */
-.friend:hover .friend-details {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(-50%);
+.friend:hover {
+    z-index: 1000;
 }
 
 .friend:hover .friend-image {
     transform: scale(1.1);
+}
+
+.friend:hover .friend-details {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Details content styling */
@@ -230,13 +323,11 @@ footer p:hover {
 
 /* New section for the rectangular image grid */
 .friend-image-container {
-    display: flex; /* Arrange images in a row */
-    justify-content: space-between; /* Evenly space the images */
-    align-items: center; /* Vertically align images */
-    width: 100%; /* Full width of the container */
-    padding: 30px;
-    box-sizing: border-box; /* Include padding in the width */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 20px;
+    padding: 30px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     border-radius: 15px;
@@ -244,15 +335,18 @@ footer p:hover {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Make images rectangular */
+/* Image box styling */
 .friend-img {
-    width: 30%; /* Images take 30% of the container width */
-    height: 200px; /* Ensure a fixed height for all images */
-    object-fit: cover; /* Make sure the image covers the container space without distortion */
-    border-radius: 0px; /* Remove circular styling (this is key to fixing the circular issue) */
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     filter: grayscale(0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px;
 }
 
 /* Add hover effect to enlarge the image */
@@ -260,6 +354,17 @@ footer p:hover {
     transform: scale(1.05) rotate(2deg);
     filter: grayscale(0);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Add random tilt variations for different images */
+.friend-img:nth-child(2n):hover {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.friend-img:nth-child(3n):hover {
+    transform: scale(1.05) rotate(3deg);
 }
 
 /* Style for the flip container */
@@ -295,6 +400,7 @@ footer p:hover {
     backdrop-filter: blur(10px);
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1;
 }
 
 .memory-card {
@@ -309,14 +415,31 @@ footer p:hover {
 }
 
 #group-photo {
-    width: 100%;
+    width: 150%;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    transition: all 0.5s ease;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #group-photo:hover {
-    transform: scale(1.02);
+    transform: scale(1.02) rotate(3deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Add random tilt variations for different memories */
+#group-photo:nth-of-type(2n):hover {
+    transform: scale(1.02) rotate(-2deg);
+}
+
+#group-photo:nth-of-type(3n):hover {
+    transform: scale(1.02) rotate(3deg);
+}
+
+#group-photo:nth-of-type(4n):hover {
+    transform: scale(1.02) rotate(-3deg);
 }
 
 /* Add typing animation keyframes */
@@ -343,14 +466,17 @@ footer p:hover {
     border-radius: 15px;
     display: block !important;
     position: static !important;
+    margin-top: 100px;  /* This will align it with the Today's Memory heading */
+    text-align: left;  /* Ensure text stays left-aligned */
 }
 
 /* Title animation */
 .typing-title {
     color: #fff;
-    font-size: 1.8em;
+    font-size: 2.0em;
     margin-bottom: 20px;
     font-family: 'Lora', serif;
+    text-align: left;  /* Ensure title stays left-aligned */
 }
 
 /* Description animation */
@@ -359,6 +485,7 @@ footer p:hover {
     line-height: 1.8;
     font-size: 1.1em;
     font-family: 'Poppins', sans-serif;
+    text-align: left;  /* Ensure description stays left-aligned */
 }
 
 /* Individual letter animation */
@@ -387,24 +514,24 @@ footer p:hover {
     }
     
     .friend-image-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 15px;
+        padding: 15px;
     }
     
     .friend-img {
-        width: 90%;
-        margin: 10px 0;
+        height: 200px;  /* Slightly smaller height on mobile */
     }
 
     .friend-details {
-        left: 50%;
-        top: calc(100% + 10px);
-        transform: translateX(-50%);
-        width: 180px;
+        left: 90px;
+        top: 0;
+        width: 200px;
     }
 
-    .friend:hover .friend-details {
-        transform: translateX(-50%);
+    #friend-names {
+        gap: 40px;
     }
 }
 
@@ -454,7 +581,7 @@ html {
     align-items: center;
     padding: 20px;
     border-radius: 15px;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
 }
 
 #memory-description.show {
@@ -476,4 +603,806 @@ html {
 #memory-description p {
     color: #fff;
     line-height: 1.6;
+}
+
+/* More on that day button styles */
+.more-info-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.more-info-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.more-info-button .plus-icon {
+    background: #4285f4;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    padding-bottom: 1px;
+    margin-right: 8px;
+}
+
+/* Expanded content styles */
+.expanded-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300vh;
+    visibility: hidden;
+    z-index: 9999;
+    overflow-y: hidden;
+}
+
+.expanded-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.5 ease;
+}
+/* The real inside of the expanded content, make change here to alter the card*/
+.expanded-content-inner {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    width: 90%;
+    max-width: 1200px;
+    min-height: 85vh;
+    max-height: 90vh;
+    background: rgba(28, 28, 30, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px 30px 0 0;
+    transform: translate(-50%, 100%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    color: white;
+    z-index: 10000;
+    overflow-y: auto;
+}
+
+.expanded-content-scroll {
+    padding: 20px;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.expanded-content.active {
+    visibility: visible;
+}
+
+.expanded-content.active::before {
+    opacity: 1;
+}
+
+.expanded-content.active .expanded-content-inner {
+    transform: translate(-50%, 0);
+}
+
+.expanded-content.active .expanded-content-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add smooth entrance animation for content */
+.memory-content {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add subtle hover effect to the expand button */
+.more-info-button {
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.more-info-button:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.more-info-button:active {
+    transform: scale(0.95);
+}
+
+/* Add smooth transition for the plus icon */
+.plus-icon {
+    transition: transform 0.3s ease;
+}
+
+.more-info-button:hover .plus-icon {
+    transform: rotate(90deg);
+}
+
+/* Add a drag handle at the top of the card */
+.drag-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    margin: 12px 0;
+    cursor: grab;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(60, 60, 67, 0.7);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg);
+    background: rgba(60, 60, 67, 0.9);
+}
+
+@media (max-width: 768px) {
+    .expanded-content-inner {
+        width: 100%;
+        height: 90vh;
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* Ensure other elements stay below the modal */
+.memory-container,
+#friend-names,
+.friend-details {
+    position: relative;
+    z-index: 1;
+}
+
+.sticker-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100000;
+}
+
+.sticker-slot {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.sticker-slot[data-position="top-left"] {
+    top: 20px;
+    left: 20px;
+}
+
+.sticker-slot[data-position="top-right"] {
+    top: 20px;
+    right: 20px;
+}
+
+.sticker-slot[data-position="bottom-left"] {
+    bottom: 100px;
+    left: 20px;
+}
+
+.sticker-slot[data-position="bottom-right"] {
+    bottom: 100px;
+    right: 20px;
+}
+
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.dock-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    height: 70px;
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 16px 16px 0 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .app-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 15px;
+    }
+    
+    .sticker-slot {
+        width: 60px;
+        height: 60px;
+    }
+
+    .expanded-content-inner {
+        width: 100%;
+        height: 90vh;
+    }
+    
+    .close-modal {
+        top: 15px;
+        right: 15px;
+    }
+}
+
+/* Styles for content inside expanded modal */
+.expanded-content h2 {
+    font-family: 'Lora', serif;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.memory-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.top-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.main-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.memory-description {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.bottom-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.additional-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.additional-photos img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.additional-photos img:hover {
+    transform: scale(1.05);
+}
+
+.additional-description {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .top-section,
+    .bottom-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .additional-photos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Styles for alternating photos in expanded content */
+.additional-photos-section {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;  /* Increased gap between photos */
+    margin-top: 60px;  /* More space after main image */
+    width: 100%;
+    padding: 0 20px;  /* Add some horizontal padding */
+}
+
+.photo-left, .photo-right {
+    width: 100%;
+    display: flex;
+}
+
+.photo-left {
+    justify-content: flex-start;
+}
+
+.photo-right {
+    justify-content: flex-end;
+}
+
+.additional-photo {
+    width: 60%;
+    height: 300px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.additional-photo:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .additional-photo {
+        width: 80%;
+        height: 200px;
+    }
+    
+    .additional-photos-section {
+        gap: 40px;
+        margin-top: 40px;
+    }
+}
+
+/* Update the glow animation for the image */
+@keyframes multiColorGlow {
+    0% { box-shadow: 0 0 15px rgba(255, 99, 71, 0.3), 0 0 30px rgba(255, 99, 71, 0.1); }
+    25% { box-shadow: 0 0 15px rgba(65, 105, 225, 0.3), 0 0 30px rgba(65, 105, 225, 0.1); }
+    50% { box-shadow: 0 0 15px rgba(50, 205, 50, 0.3), 0 0 30px rgba(50, 205, 50, 0.1); }
+    75% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); }
+    100% { box-shadow: 0 0 15px rgba(255, 99, 71, 0.3), 0 0 30px rgba(255, 99, 71, 0.1); }
+}
+
+/* Memories Page Styles */
+.memories-page {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 40px;
+    overflow-y: auto;
+    transform: translateX(0);
+    will-change: transform;
+}
+
+.memories-page.active {
+    transform: translateX(-100%);
+}
+
+.close-memories {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-memories:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.memories-title {
+    font-family: 'Lora', serif;
+    font-size: 2.5em;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.gallery-stack {
+    position: relative;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 24px;
+    padding: 25px;
+    overflow: visible;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gallery-stack:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.gallery-stack h3 {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.stack-images {
+    position: relative;
+    width: 280px;
+    height: 350px;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stack-images img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    left: 0;
+    right: 0;
+    margin: auto;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Stack positioning with more subtle angles */
+.stack-images img:nth-child(1) {
+    transform: translateZ(0) rotate(0deg) scale(1);
+    z-index: 4;
+    filter: brightness(1) contrast(1.05);
+}
+
+.stack-images img:nth-child(2) {
+    transform: translateZ(-15px) translateY(8px) rotate(-1deg) scale(0.98);
+    z-index: 3;
+    filter: brightness(0.95) contrast(1.02);
+}
+
+.stack-images img:nth-child(3) {
+    transform: translateZ(-30px) translateY(16px) rotate(1deg) scale(0.96);
+    z-index: 2;
+    filter: brightness(0.9) contrast(1);
+}
+
+.stack-images img:nth-child(4) {
+    transform: translateZ(-45px) translateY(24px) rotate(-0.5deg) scale(0.94);
+    z-index: 1;
+    filter: brightness(0.85) contrast(0.98);
+}
+
+/* Hover effects with smoother transitions */
+.gallery-stack:hover .stack-images img:nth-child(1) {
+    transform: translateZ(40px) translateY(-15px) rotate(0deg) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1) contrast(1.1);
+}
+
+.gallery-stack:hover .stack-images img:nth-child(2) {
+    transform: translateZ(20px) translateY(0px) rotate(-2deg) scale(1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    filter: brightness(1) contrast(1.05);
+}
+
+.gallery-stack:hover .stack-images img:nth-child(3) {
+    transform: translateZ(0px) translateY(15px) rotate(2deg) scale(0.98);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    filter: brightness(0.95) contrast(1);
+}
+
+.gallery-stack:hover .stack-images img:nth-child(4) {
+    transform: translateZ(-20px) translateY(30px) rotate(-1deg) scale(0.96);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    filter: brightness(0.9) contrast(0.98);
+}
+
+/* Loading state */
+.stack-images img.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+    background: linear-gradient(45deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.6; }
+}
+
+/* Error state */
+.stack-images img.error {
+    background: linear-gradient(45deg, rgba(0,0,0,0.2), rgba(0,0,0,0.3));
+    border: 1px dashed rgba(255,255,255,0.1);
+}
+
+/* Add a subtle glow effect on hover */
+.gallery-stack::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.gallery-stack:hover::after {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .gallery-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 30px;
+    }
+
+    .gallery-stack {
+        height: 400px;
+        padding: 20px;
+    }
+
+    .stack-images {
+        width: 240px;
+        height: 300px;
+    }
+}
+
+/* Gallery Stack Modal Styles */
+.gallery-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 10001;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-modal.active {
+    display: block;
+    opacity: 1;
+}
+
+.gallery-modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.gallery-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.gallery-modal-title {
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 2em;
+    margin: 0;
+}
+
+.gallery-modal-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.gallery-modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.gallery-grid-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-grid-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-grid-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-grid-item:hover::after {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .gallery-modal-content {
+        padding: 20px;
+    }
+    
+    .gallery-modal-title {
+        font-size: 1.5em;
+    }
 }
