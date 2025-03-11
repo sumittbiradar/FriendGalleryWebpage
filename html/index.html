@@ -238,7 +238,8 @@
     </footer>
 
     <script>
-        // Memory data with expanded content
+        // Hey! This is where we store all our awesome memories. Each memory has a title, date, 
+        // and a fun description. Some even have extra details like location and behind-the-scenes stuff!
         const memories = [
             {
                 image: 'default.JPG',
@@ -306,13 +307,16 @@
 
         let currentMemoryIndex = 0;
 
-        // Function to display random memory
+        // This function picks a random memory to show on the page.
+        // Think of it like shuffling through a deck of photos and picking one!
         function getRandomMemory() {
             currentMemoryIndex = Math.floor(Math.random() * memories.length);
             const memory = memories[currentMemoryIndex];
             
+            // Update the big photo in the center
             document.getElementById('group-photo').src = `../images/${memory.image}`;
             
+            // Add the title and story below the photo
             const memoryHTML = `
                 <h3>${memory.date} - ${memory.title}</h3>
                 <p>${memory.description}</p>
@@ -320,22 +324,21 @@
             
             document.getElementById('memory-description').innerHTML = memoryHTML;
             
-            // Hide expanded content when new memory is shown
+            // If we had the expanded view open, let's close it
             document.getElementById('expanded-content').classList.remove('active');
         }
 
-        // Function to toggle expanded content
+        // This handles the "Expand" button click - you know, when you want to see more details
+        // about a memory. It's like opening up a photo album to get a better look!
         function toggleExpandedContent() {
             const expandedContent = document.getElementById('expanded-content');
             
             if (!expandedContent.classList.contains('active')) {
-                // Prevent body scrolling when modal is open
+                // Lock the background so you can focus on the memory
                 document.body.style.overflow = 'hidden';
-                
-                // Add active class to trigger animation
                 expandedContent.classList.add('active');
                 
-                // Load content for the current memory
+                // Get all the juicy details about this memory
                 const memory = memories[currentMemoryIndex];
                 const content = `
                     <h2>${memory.title}</h2>
@@ -347,70 +350,51 @@
                 
                 expandedContent.querySelector('.expanded-content-scroll').innerHTML = content;
             } else {
-                // Remove active class to trigger slide-down animation
+                // Time to close it up!
                 expandedContent.classList.remove('active');
                 
-                // Re-enable body scrolling after animation
+                // Give it a moment to animate before enabling scrolling again
                 setTimeout(() => {
                     document.body.style.overflow = 'auto';
                 }, 500);
             }
         }
 
-        // Close modal when clicking outside content
-        document.getElementById('expanded-content').addEventListener('click', function(e) {
-            if (e.target === this || e.target.classList.contains('expanded-content')) {
-                toggleExpandedContent();
-            }
-        });
-
-        // Prevent clicks on modal content from closing it
-        document.querySelector('.expanded-content-inner').addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // Close modal on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.getElementById('expanded-content').classList.contains('active')) {
-                toggleExpandedContent();
-            }
-        });
-
-        // Function to show friend images
+        // This is for showing a specific friend's photo collection
+        // It's like flipping to their section in our digital photo album
         function showFriendImages(friend) {
-            // First, hide all friend image sections
+            // First, hide everyone else's photos
             const allFriendImages = document.querySelectorAll('.friend-images');
             allFriendImages.forEach(function(imageContainer) {
                 imageContainer.style.display = 'none';
             });
             
-            // Convert friend name to lowercase for case-insensitive matching
+            // Now show this friend's photos
             const friendLower = friend.toLowerCase();
-        
-            // Show the selected friend's images
             const friendImages = document.getElementById(friendLower + '-images');
             if (friendImages) {
-            friendImages.style.display = 'block';
+                friendImages.style.display = 'block';
             }
         }
 
-        // Function to toggle memories page
+        // This opens up our F.R.I.E.N.D.S style memories page
+        // You know, like when you click that nostalgic button at the top!
         function toggleMemoriesPage() {
             const memoriesPage = document.querySelector('.memories-page');
             memoriesPage.classList.toggle('active');
             
             if (memoriesPage.classList.contains('active')) {
+                // Lock the background scroll when viewing memories
                 document.body.style.overflow = 'hidden';
                 loadGalleryImages();
             } else {
+                // Back to normal scrolling when we close
                 document.body.style.overflow = 'auto';
             }
         }
 
-        // Close memories page when clicking the close button
-        document.querySelector('.close-memories').addEventListener('click', toggleMemoriesPage);
-
-        // Function to load images for each gallery stack
+        // This loads up all the photo stacks in our gallery
+        // Each stack is like a mini-album of a specific adventure
         function loadGalleryImages() {
             const stacks = document.querySelectorAll('.gallery-stack');
             
@@ -419,23 +403,26 @@
                 const stackImagesContainer = stack.querySelector('.stack-images');
                 const baseName = folderName.split('The One with the ')[1];
                 
-                // Clear existing images
+                // Clear out any old photos
                 stackImagesContainer.innerHTML = '';
                 
-                // Load first 4 images from the folder
+                // Load the first 4 photos for the preview stack
+                // (We don't load all at once to save bandwidth - smart, right?)
                 for (let i = 1; i <= 4; i++) {
                     const img = document.createElement('img');
-                    img.loading = 'lazy';
+                    img.loading = 'lazy';  // This helps the page load faster
                     img.classList.add('loading');
                     
                     const encodedFolderName = encodeURIComponent(folderName);
                     const imagePath = `../images/${encodedFolderName}/${baseName}${i}.jpg`;
                     
+                    // Once the image loads, make it look nice
                     img.onload = function() {
                         img.classList.remove('loading');
                         img.classList.add('loaded');
                     };
                     
+                    // If an image fails to load, handle it gracefully
                     img.onerror = function() {
                         img.classList.remove('loading');
                         img.classList.add('error');
@@ -447,19 +434,22 @@
             });
         }
 
-        // Initialize when page loads
+        // When the page loads, let's get everything ready!
         window.onload = function() {
-            getRandomMemory();
-            // Load gallery images when memories page is first opened
+            getRandomMemory();  // Show a random memory to start
+            
+            // Set up the F.R.I.E.N.D.S button to load gallery images
             document.querySelector('.friends-button').addEventListener('click', function() {
                 if (!document.querySelector('.memories-page').classList.contains('active')) {
                     loadGalleryImages();
                 }
             });
-            // Refresh memory every 24 hours
+            
+            // Change the memory every 24 hours - keeps things fresh!
             setInterval(getRandomMemory, 24 * 60 * 60 * 1000);
         };
 
+        // These are all our gallery styles - they make everything look pretty!
         const galleryStyles = document.createElement('style');
         galleryStyles.textContent = `
             .gallery-modal {
@@ -603,12 +593,49 @@
         `;
         document.head.appendChild(galleryStyles);
 
+        // Set up all our click handlers and event listeners
+        // This makes everything interactive and fun to use!
+        document.querySelectorAll('.gallery-stack').forEach(stack => {
+            stack.addEventListener('click', function() {
+                const folderName = this.dataset.folder;
+                loadAllImagesFromFolder(folderName);
+            });
+        });
+
+        // Close button for the gallery
+        document.querySelector('.gallery-modal-close').addEventListener('click', function() {
+            const modal = document.querySelector('.gallery-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Click outside to close - because that's just good UX!
+        document.querySelector('.gallery-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Press Escape to close - power users love keyboard shortcuts!
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.querySelector('.gallery-modal');
+                if (modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+
+        // This is the cool part - when you click on a gallery stack, it opens up
+        // a split view with thumbnails on the left and a big preview on the right
         function loadAllImagesFromFolder(folderName) {
             const modal = document.querySelector('.gallery-modal');
             const modalTitle = document.querySelector('.gallery-modal-title');
             const galleryGrid = document.querySelector('.gallery-grid');
             
-            // Clear and setup the gallery
+            // Set up our viewing area
             modalTitle.textContent = folderName;
             galleryGrid.innerHTML = `
                 <div class="thumbnails-list"></div>
@@ -619,28 +646,31 @@
             const previewContainer = galleryGrid.querySelector('.preview-container');
             const baseName = folderName.split('The One with the ')[1];
             
-            // Show the modal
+            // Show the modal with style
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Load images (up to 20)
+            // Now load up to 20 images from this adventure
+            // (We might not have 20, but that's our max per folder)
             let loadedImages = 0;
             for (let i = 1; i <= 20; i++) {
                 const img = new Image();
                 img.src = `../images/${folderName}/${baseName}${i}.jpg`;
                 img.className = 'thumbnail';
                 
+                // When each image loads successfully...
                 img.onload = function() {
                     loadedImages++;
                     thumbnailsList.appendChild(img);
                     
+                    // Make it clickable to show in the preview
                     img.addEventListener('click', function() {
-                        // Update active state
+                        // Highlight the selected thumbnail
                         document.querySelectorAll('.thumbnail').forEach(thumb => 
                             thumb.classList.remove('active'));
                         img.classList.add('active');
                         
-                        // Update preview
+                        // Show it big and beautiful in the preview area
                         const previewImg = new Image();
                         previewImg.src = this.src;
                         previewImg.className = 'preview-image';
@@ -648,12 +678,13 @@
                         previewContainer.appendChild(previewImg);
                     });
                     
-                    // Show first image in preview
+                    // Auto-select the first image when it loads
                     if (loadedImages === 1) {
                         img.click();
                     }
                 };
                 
+                // If an image doesn't exist, handle it nicely
                 img.onerror = function() {
                     if (i === 1) {
                         previewContainer.innerHTML = '<p style="color: white;">No images found in this folder</p>';
@@ -661,40 +692,6 @@
                 };
             }
         }
-
-        // Add click event listeners to gallery stacks
-        document.querySelectorAll('.gallery-stack').forEach(stack => {
-            stack.addEventListener('click', function() {
-                const folderName = this.dataset.folder;
-                loadAllImagesFromFolder(folderName);
-            });
-        });
-
-        // Close gallery modal when clicking the close button
-        document.querySelector('.gallery-modal-close').addEventListener('click', function() {
-            const modal = document.querySelector('.gallery-modal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close gallery modal when clicking outside the content
-        document.querySelector('.gallery-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Close gallery modal on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = document.querySelector('.gallery-modal');
-                if (modal.classList.contains('active')) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-        });
     </script>
 </body>
 </html>
