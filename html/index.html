@@ -56,12 +56,17 @@
         </div>
     </div>
 
+
+
+    <!--Close buttons here-->
+
+
     <!-- Add this right after the memories-page div -->
     <div class="gallery-modal">
         <div class="gallery-modal-content">
             <div class="gallery-modal-header">
                 <h2 class="gallery-modal-title"></h2>
-                <button class="gallery-modal-close">×</button>
+                <button class="gallery-modal-close">×</button> <!--Gallery close button-->
             </div>
             <div class="gallery-grid"></div>
         </div>
@@ -74,7 +79,7 @@
                     <h2>Today's Memory</h2>
                     <img id="group-photo" src="../images/default.JPG" alt="Random Group Photo">
                     <button class="more-info-button" onclick="toggleExpandedContent()">
-                        <span class="plus-icon">+</span>
+                        <span class="plus-icon">+</span> <!--Expand button on the main Memory-->
                         Expand
                     </button>
                 </div>
@@ -88,7 +93,7 @@
         <div id="expanded-content" class="expanded-content">
             <div class="expanded-content-inner">
                 <div class="drag-handle"></div>
-                <button class="close-modal">×</button>
+                <button class="close-modal">×</button> <!--Main memory exanded close button-->
                 <div class="expanded-content-scroll">
                     <!-- Content will be dynamically inserted here -->
                 </div>
@@ -126,7 +131,7 @@
                 <div class="friend-details">
                     <p class="friend-name">Shirish</p>
                     <p>Well well well</p>
-                    <p>Status: No one knows(Not even him)</p>
+                    <p>Status: No one knows(Not even himself)</p>
                 </div>
             </div>
             <div class="friend" onclick="showFriendImages('anil')">
@@ -158,80 +163,31 @@
         <!-- Friend images section -->
         <div id="friend-images-container">
             <div id="sachin-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/sachin/sachin2.png" alt="Sachin Image 1" class="friend-img">
-                    <img src="../images/sachin/sachin3.png" alt="Sachin Image 2" class="friend-img">
-                    <img src="../images/sachin/sachin4.png" alt="Sachin Image 3" class="friend-img">
-                    <img src="../images/sachin/sachin5.png" alt="Sachin Image 4" class="friend-img">
-                    <img src="../images/sachin/sachin6.png" alt="Sachin Image 5" class="friend-img">
-                    <img src="../images/sachin/sachin7.png" alt="Sachin Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="sid-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/sid/sid.JPG" alt="Siddharth Image 1" class="friend-img">
-                    <img src="../images/sid/sid1.JPG" alt="Siddharth Image 2" class="friend-img">
-                    <img src="../images/sid/sid2.JPG" alt="Siddharth Image 3" class="friend-img">
-                    <img src="../images/sid/sid3.JPG" alt="Siddharth Image 4" class="friend-img">
-                    <img src="../images/sid/sid4.JPG" alt="Siddharth Image 5" class="friend-img">
-                    <img src="../images/sid/sid5.JPG" alt="Siddharth Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="darshan-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/darshan/darshan1.JPG" alt="Darshan Image 1" class="friend-img">
-                    <img src="../images/darshan/darshan2.JPG" alt="Darshan Image 2" class="friend-img">
-                    <img src="../images/darshan/darshan3.JPG" alt="Darshan Image 3" class="friend-img">
-                    <img src="../images/darshan/darshan4.JPG" alt="Darshan Image 4" class="friend-img">
-                    <img src="../images/darshan/darshan5.JPG" alt="Darshan Image 5" class="friend-img">
-                    <img src="../images/darshan/darshan6.JPG" alt="Darshan Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="shirish-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/shirish/shirish1.JPG" alt="Shirish Image 1" class="friend-img">
-                    <img src="../images/shirish/shirish2.JPG" alt="Shirish Image 2" class="friend-img">
-                    <img src="../images/shirish/shirish3.JPG" alt="Shirish Image 3" class="friend-img">
-                    <img src="../images/shirish/shirish4.JPG" alt="Shirish Image 4" class="friend-img">
-                    <img src="../images/shirish/shirish5.JPG" alt="Shirish Image 5" class="friend-img">
-                    <img src="../images/shirish/shirish6.JPG" alt="Shirish Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="anil-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/anil/anil1.JPG" alt="Anil Image 1" class="friend-img">
-                    <img src="../images/anil/anil2.JPG" alt="Anil Image 2" class="friend-img">
-                    <img src="../images/anil/anil3.JPG" alt="Anil Image 3" class="friend-img">
-                    <img src="../images/anil/anil4.JPG" alt="Anil Image 4" class="friend-img">
-                    <img src="../images/anil/anil5.JPG" alt="Anil Image 5" class="friend-img">
-                    <img src="../images/anil/anil6.JPG" alt="Anil Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="prajwal-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/prajwal/prajwal1.JPG" alt="Prajwal Image 1" class="friend-img">
-                    <img src="../images/prajwal/prajwal2.JPG" alt="Prajwal Image 2" class="friend-img">
-                    <img src="../images/prajwal/prajwal3.JPG" alt="Prajwal Image 3" class="friend-img">
-                    <img src="../images/prajwal/prajwal4.JPG" alt="Prajwal Image 4" class="friend-img">
-                    <img src="../images/prajwal/prajwal5.JPG" alt="Prajwal Image 5" class="friend-img">
-                    <img src="../images/prajwal/prajwal6.JPG" alt="Prajwal Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
 
             <div id="abhishek-images" class="friend-images">
-                <div class="friend-image-container">
-                    <img src="../images/abhishek/abhishek1.JPG" alt="Abhishek Image 1" class="friend-img">
-                    <img src="../images/abhishek/abhishek2.JPG" alt="Abhishek Image 2" class="friend-img">
-                    <img src="../images/abhishek/abhishek3.JPG" alt="Abhishek Image 3" class="friend-img">
-                    <img src="../images/abhishek/abhishek4.JPG" alt="Abhishek Image 4" class="friend-img">
-                    <img src="../images/abhishek/abhishek5.JPG" alt="Abhishek Image 5" class="friend-img">
-                    <img src="../images/abhishek/abhishek6.JPG" alt="Abhishek Image 6" class="friend-img">
-                </div>
+                <div class="friend-image-container"></div>
             </div>
         </div>
     </main>

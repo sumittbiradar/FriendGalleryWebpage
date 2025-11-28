@@ -1,5 +1,3 @@
-// Hey! This is where we store all our awesome memories. Each memory has a title, date, 
-// and a fun description. Some even have extra details like location and behind-the-scenes stuff!
 const memories = [
     {
         image: 'default.JPG',
@@ -7,8 +5,8 @@ const memories = [
         title: 'The Stylish Group with a Junior',
         description: 'The iconic icons in their graduation best! Sachin looking sharp in red, Sid rocking that Sliver, and Darshan keeping it cool, Abhishek being the rowdy in black, Anil as usual the mansik, Prajwal looking normal(believe me that is a compliment) in white, and Shirish looking manly in black with Jaundice in his eyes.The beginning of our graduation celebrations and the perfect way to kick off our photoshoot.',
         expandedContent: {
-            location: 'REVA University, Bangalore',
-            time: '10:30 AM',
+            location: 'Jain College of Engineering',
+            time: '4:30 PM',
             weather: 'Sunny with a perfect breeze',
             behindTheScenes: 'It took us 30 minutes to coordinate our poses!',
             funFact: 'This was actually our 5th attempt at getting everyone to look at the camera at the same time.',
@@ -86,10 +84,11 @@ function getRandomMemory() {
 
     // If we had the expanded view open, let's close it
     document.getElementById('expanded-content').classList.remove('active');
+
 }
 
 // This handles the "Expand" button click - you know, when you want to see more details
-// about a memory. It's like opening up a photo album to get a better look!
+// about a memory. It's like opening up a photo album to get a better look
 function toggleExpandedContent() {
     const expandedContent = document.getElementById('expanded-content');
 
@@ -131,9 +130,60 @@ function showFriendImages(friend) {
 
     // Now show this friend's photos
     const friendLower = friend.toLowerCase();
-    const friendImages = document.getElementById(friendLower + '-images');
-    if (friendImages) {
-        friendImages.style.display = 'block';
+    const friendImagesDiv = document.getElementById(friendLower + '-images');
+
+    if (friendImagesDiv) {
+        friendImagesDiv.style.display = 'block';
+
+        // Find the container for the images
+        const container = friendImagesDiv.querySelector('.friend-image-container');
+        if (container) {
+            // Clear existing images to prevent duplicates if we click multiple times
+            // But wait, if we clear it, we re-load every time. 
+            // Let's check if it's empty. If not empty, we assume it's already loaded.
+            if (container.children.length > 0) {
+                return;
+            }
+
+            // Load images dynamically
+            // We'll try to load images 1 through 20
+            const maxImages = 20;
+            const extensions = ['jpg', 'png', 'jpeg', 'JPG', 'PNG'];
+
+            for (let i = 1; i <= maxImages; i++) {
+                // We don't know which extension the file has, so we try to load generic
+                // This is a bit "brute force" but works for static sites without a backend listing
+
+                // Helper to try loading an image
+                const tryLoadImage = (index, extIndex) => {
+                    if (extIndex >= extensions.length) return; // No more extensions to try
+
+                    const ext = extensions[extIndex];
+                    const img = new Image();
+                    const src = `../images/${friendLower}/${friendLower}_${index}.${ext}`;
+
+                    img.onload = function () {
+                        img.className = 'friend-img';
+                        img.alt = `${friend} Image ${index}`;
+
+                        // Insert in order? Since async, they might come out of order.
+                        // To preserve order, we can insert placeholders or just append.
+                        // For simplicity, we append. If strict order is needed, we'd need placeholders.
+                        // Let's just append for now.
+                        container.appendChild(img);
+                    };
+
+                    img.onerror = function () {
+                        // Try next extension
+                        tryLoadImage(index, extIndex + 1);
+                    };
+
+                    img.src = src;
+                };
+
+                tryLoadImage(i, 0);
+            }
+        }
     }
 }
 
@@ -167,7 +217,7 @@ function loadGalleryImages() {
         stackImagesContainer.innerHTML = '';
 
         // Load the first 4 photos for the preview stack
-        // (We don't load all at once to save bandwidth - smart, right?)
+        // (We don't load all at once to save bandwidth)
         for (let i = 1; i <= 4; i++) {
             const img = document.createElement('img');
             img.loading = 'lazy';  // This helps the page load faster
@@ -190,6 +240,9 @@ function loadGalleryImages() {
 
             img.src = imagePath;
             stackImagesContainer.appendChild(img);
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+            }, 500);
         }
     });
 }
@@ -315,7 +368,7 @@ function loadAllImagesFromFolder(folderName) {
         // If an image doesn't exist, handle it nicely
         img.onerror = function () {
             if (i === 1) {
-                previewContainer.innerHTML = '<p style="color: white;">No images found in this folder</p>';
+                previewContainer.innerHTML = '<p style="color: white;">Select the picture to view</p>';
             }
         };
     }
