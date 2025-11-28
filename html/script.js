@@ -146,49 +146,29 @@ function showFriendImages(friend) {
             }
 
             // Load images dynamically
-            // We'll try to load images 1 through 20
-            const maxImages = 20;
-            const extensions = ['jpg', 'png', 'jpeg', 'JPG', 'PNG'];
+            // We'll try to load images 1 through 100
+            const maxImages = 100;
 
             for (let i = 1; i <= maxImages; i++) {
-                // We don't know which extension the file has, so we try to load generic
-                // This is a bit "brute force" but works for static sites without a backend listing
+                findAndLoadMedia(friendLower, friendLower, i, (mediaElement) => {
+                    mediaElement.className = 'friend-img';
+                    mediaElement.alt = `${friend} Image ${i}`;
 
-                // Helper to try loading an image
-                const tryLoadImage = (index, extIndex) => {
-                    if (extIndex >= extensions.length) return; // No more extensions to try
+                    if (mediaElement.tagName === 'VIDEO') {
+                        mediaElement.muted = true;
+                        mediaElement.playsInline = true;
+                        // mediaElement.autoplay = true; // Removed to save resources
+                    }
 
-                    const ext = extensions[extIndex];
-                    const img = new Image();
-                    const src = `../images/${friendLower}/${friendLower}_${index}.${ext}`;
-
-                    img.onload = function () {
-                        img.className = 'friend-img';
-                        img.alt = `${friend} Image ${index}`;
-
-                        // Insert in order? Since async, they might come out of order.
-                        // To preserve order, we can insert placeholders or just append.
-                        // For simplicity, we append. If strict order is needed, we'd need placeholders.
-                        // Let's just append for now.
-                        container.appendChild(img);
-                    };
-
-                    img.onerror = function () {
-                        // Try next extension
-                        tryLoadImage(index, extIndex + 1);
-                    };
-
-                    img.src = src;
-                };
-
-                tryLoadImage(i, 0);
+                    container.appendChild(mediaElement);
+                });
             }
         }
     }
 }
 
 // This opens up our F.R.I.E.N.D.S style memories page
-// You know, like when you click that nostalgic button at the top!
+// You know, like when you click that nostalgic button at the top right!
 function toggleMemoriesPage() {
     const memoriesPage = document.querySelector('.memories-page');
     memoriesPage.classList.toggle('active');
@@ -218,31 +198,64 @@ function loadGalleryImages() {
 
         // Load the first 4 photos for the preview stack
         // (We don't load all at once to save bandwidth)
-        for (let i = 1; i <= 4; i++) {
-            const img = document.createElement('img');
-            img.loading = 'lazy';  // This helps the page load faster
-            img.classList.add('loading');
+        const maxStackItems = 4;
+        const placeholders = [];
 
-            const encodedFolderName = encodeURIComponent(folderName);
-            const imagePath = `../images/${encodedFolderName}/${baseName}${i}.jpg`;
+        // Create placeholders first to reserve slots
+        for (let i = 0; i < maxStackItems; i++) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'stack-item placeholder'; // Add stack-item so it takes up the slot
+            stackImagesContainer.appendChild(placeholder);
+            placeholders.push(placeholder);
+        }
 
-            // Once the image loads, make it look nice
-            img.onload = function () {
-                img.classList.remove('loading');
-                img.classList.add('loaded');
-            };
+        for (let i = 1; i <= maxStackItems; i++) {
+            findAndLoadMedia(folderName, baseName, i, (mediaElement) => {
+                console.log(`Loaded media for ${folderName} index ${i}:`, mediaElement.tagName);
 
-            // If an image fails to load, handle it gracefully
-            img.onerror = function () {
-                img.classList.remove('loading');
-                img.classList.add('error');
-            };
+                mediaElement.loading = 'lazy';  // This helps the page load faster
+                mediaElement.classList.add('loading');
 
-            img.src = imagePath;
-            stackImagesContainer.appendChild(img);
-            setTimeout(() => {
-                document.body.style.overflow = 'auto';
-            }, 500);
+                // If it's a video, we want it to behave like a preview image
+                if (mediaElement.tagName === 'VIDEO') {
+                    mediaElement.muted = true;
+                    mediaElement.playsInline = true;
+                    // mediaElement.autoplay = true; // Removed to save resources
+                }
+
+                // Add common class for stack positioning
+                mediaElement.classList.add('stack-item');
+
+                // Once the image loads, make it look nice
+                // For video, we can use onloadeddata
+                const onLoad = function () {
+                    mediaElement.classList.remove('loading');
+                    mediaElement.classList.add('loaded');
+                };
+
+                if (mediaElement.tagName === 'IMG') {
+                    mediaElement.onload = onLoad;
+                    mediaElement.onerror = function () {
+                        mediaElement.classList.remove('loading');
+                        mediaElement.classList.add('error');
+                    };
+                } else {
+                    mediaElement.onloadeddata = onLoad;
+                    mediaElement.onerror = function () {
+                        mediaElement.classList.remove('loading');
+                        mediaElement.classList.add('error');
+                    };
+                }
+
+                // Replace the placeholder with the actual media element
+                // This preserves the order and prevents re-appending issues
+                const placeholder = placeholders[i - 1];
+                if (placeholder && placeholder.parentNode) {
+                    placeholder.parentNode.replaceChild(mediaElement, placeholder);
+                    // Update reference in case we need it (though we shouldn't)
+                    placeholders[i - 1] = mediaElement;
+                }
+            });
         }
     });
 }
@@ -331,45 +344,121 @@ function loadAllImagesFromFolder(folderName) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
-    // Now load up to 20 images from this adventure
-    // (We might not have 20, but that's our max per folder)
-    let loadedImages = 0;
-    for (let i = 1; i <= 20; i++) {
-        const img = new Image();
-        img.src = `../images/${folderName}/${baseName}${i}.jpg`;
-        img.className = 'thumbnail';
+    // Now load up to 100 images from this adventure
+    // (We might not have 100, but that's our max per folder)
+    // Now load up to 100 images from this adventure
+    // (We might not have 100, but that's our max per folder)
+    const maxImages = 100;
+    const placeholders = [];
 
-        // When each image loads successfully...
-        img.onload = function () {
+    // Create placeholders first
+    for (let i = 0; i < maxImages; i++) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'thumbnail placeholder';
+        // Hide placeholders initially or style them to be invisible but take up space?
+        // Actually, for a grid, invisible placeholders might look like gaps.
+        // Let's make them display:none until replaced? 
+        // But then we lose the ordering benefit if we just append.
+        // We want them to exist in DOM order.
+        // Let's style them as loading skeletons or just empty blocks.
+        // For now, let's keep them in DOM but maybe invisible if empty.
+        placeholder.style.display = 'none';
+        thumbnailsList.appendChild(placeholder);
+        placeholders.push(placeholder);
+    }
+
+    let loadedImages = 0;
+    for (let i = 1; i <= maxImages; i++) {
+        findAndLoadMedia(folderName, baseName, i, (mediaElement) => {
             loadedImages++;
-            thumbnailsList.appendChild(img);
+            mediaElement.className = 'thumbnail';
+
+            if (mediaElement.tagName === 'VIDEO') {
+                mediaElement.muted = true;
+                // mediaElement.loop = true; // Removed to save resources
+                mediaElement.playsInline = true;
+                // mediaElement.autoplay = true; // Removed to save resources
+            }
+
+            // Replace the placeholder
+            const placeholder = placeholders[i - 1];
+            if (placeholder && placeholder.parentNode) {
+                // We want the media to be visible
+                mediaElement.style.display = 'block';
+                placeholder.parentNode.replaceChild(mediaElement, placeholder);
+                placeholders[i - 1] = mediaElement; // Update ref
+            }
 
             // Make it clickable to show in the preview
-            img.addEventListener('click', function () {
+            mediaElement.addEventListener('click', function () {
                 // Highlight the selected thumbnail
                 document.querySelectorAll('.thumbnail').forEach(thumb =>
                     thumb.classList.remove('active'));
-                img.classList.add('active');
+                mediaElement.classList.add('active');
 
                 // Show it big and beautiful in the preview area
-                const previewImg = new Image();
-                previewImg.src = this.src;
-                previewImg.className = 'preview-image';
                 previewContainer.innerHTML = '';
-                previewContainer.appendChild(previewImg);
+
+                let previewMedia;
+                if (mediaElement.tagName === 'IMG') {
+                    previewMedia = new Image();
+                    previewMedia.src = this.src;
+                } else {
+                    previewMedia = document.createElement('video');
+                    // Remove the time fragment so the video plays from the beginning
+                    previewMedia.src = this.src.split('#')[0];
+                    previewMedia.controls = true;
+                    previewMedia.autoplay = true;
+                }
+
+                previewMedia.className = 'preview-image';
+                previewContainer.appendChild(previewMedia);
             });
 
             // Auto-select the first image when it loads
             if (loadedImages === 1) {
-                img.click();
+                mediaElement.click();
             }
-        };
-
-        // If an image doesn't exist, handle it nicely
-        img.onerror = function () {
-            if (i === 1) {
-                previewContainer.innerHTML = '<p style="color: white;">Select the picture to view</p>';
-            }
-        };
+        });
     }
+}
+
+// Helper function to find and load media (image or video)
+// It tries different extensions until it finds one that works
+function findAndLoadMedia(folderName, baseName, index, onSuccess) {
+    const extensions = ['jpg', 'jpeg', 'png', 'JPG', 'PNG', 'mp4', 'MP4', 'mov', 'MOV'];
+    const encodedFolderName = encodeURIComponent(folderName);
+
+    // Recursive helper to try extensions
+    const tryLoad = (extIndex) => {
+        if (extIndex >= extensions.length) return; // No more extensions to try
+
+        const ext = extensions[extIndex];
+        const isVideo = ['mp4', 'MP4', 'mov', 'MOV'].includes(ext);
+        const src = `../images/${encodedFolderName}/${baseName}${index}.${ext}`;
+
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.preload = 'metadata'; // Load metadata to detect validity faster
+            // Add #t=2 to start the thumbnail at 2 seconds (avoids black frames)
+            video.src = src + '#t=2';
+            video.onloadedmetadata = function () {
+                onSuccess(video);
+            };
+            video.onerror = function () {
+                tryLoad(extIndex + 1);
+            };
+        } else {
+            const img = new Image();
+            img.src = src;
+            img.onload = function () {
+                onSuccess(img);
+            };
+            img.onerror = function () {
+                tryLoad(extIndex + 1);
+            };
+        }
+    };
+
+    tryLoad(0);
 }
