@@ -26,7 +26,13 @@
 
     <!-- Add the memories page -->
     <div class="memories-page">
-        <button class="close-memories">×</button>
+        <button class="close-memories" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
         <h2 class="memories-title">Our Adventures</h2>
         <div class="gallery-container">
             <div class="gallery-stack" data-folder="The One with the VajraPoha">
@@ -66,7 +72,13 @@
         <div class="gallery-modal-content">
             <div class="gallery-modal-header">
                 <h2 class="gallery-modal-title"></h2>
-                <button class="gallery-modal-close">×</button> <!--Gallery close button-->
+                <button class="gallery-modal-close" aria-label="Close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button> <!--Gallery close button-->
             </div>
             <div class="gallery-grid"></div>
         </div>
@@ -79,7 +91,13 @@
                     <h2>Today's Memory</h2>
                     <img id="group-photo" src="../images/default.JPG" alt="Random Group Photo">
                     <button class="more-info-button" onclick="toggleExpandedContent()">
-                        <span class="plus-icon">+</span> <!--Expand button on the main Memory-->
+                        <span class="plus-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </span> <!--Expand button on the main Memory-->
                         Expand
                     </button>
                 </div>
@@ -93,7 +111,13 @@
         <div id="expanded-content" class="expanded-content">
             <div class="expanded-content-inner">
                 <div class="drag-handle"></div>
-                <button class="close-modal">×</button> <!--Main memory exanded close button-->
+                <button class="close-modal" aria-label="Close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button> <!--Main memory exanded close button-->
                 <div class="expanded-content-scroll">
                     <!-- Content will be dynamically inserted here -->
                 </div>

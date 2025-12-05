@@ -713,11 +713,16 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1;
-    padding-bottom: 1px;
-    margin-right: 8px;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.plus-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 /* Expanded content styles */
@@ -871,9 +876,19 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10002;
+    padding: 0;
+    line-height: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     /* Ensure it's above other elements */
+}
+
+.close-modal svg {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 .close-modal:hover {
@@ -1192,9 +1207,19 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10002;
+    padding: 0;
+    line-height: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     /* Ensure it's above other elements */
+}
+
+.close-memories svg {
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
 .close-memories:hover {
@@ -1453,9 +1478,19 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10002;
+    padding: 0;
+    line-height: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     /* Ensure it's above other elements */
+}
+
+.gallery-modal-close svg {
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
 .gallery-modal-close:hover {
