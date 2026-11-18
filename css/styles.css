@@ -527,8 +527,8 @@ footer p:hover {
     padding: 30px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 15px;
-    display: block !important;
-    position: static !important;
+    display: block;
+    position: static;
     margin-top: 100px;
     /* This will align it with the Today's Memory heading */
     text-align: left;
@@ -641,26 +641,7 @@ html {
     transform: translateY(0px);
 }
 
-/* Add these styles for the memory photo and description interaction */
-#memory-description {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border-radius: 15px;
-    transition: all 0.5s ease;
-}
-
-#memory-description.show {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-}
+/* Legacy overlay styles removed — #memory-description is now a static flex child */
 
 @keyframes fadeIn {
     from {
@@ -748,7 +729,7 @@ html {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     opacity: 0;
-    transition: opacity 0.5 ease;
+    transition: opacity 0.5s ease;
 }
 
 /* The real inside of the expanded content, make change here to alter the card*/
@@ -1439,7 +1420,7 @@ html {
 }
 
 .gallery-modal.active {
-    display: block;
+    display: flex;
     opacity: 1;
 }
 
@@ -1498,12 +1479,7 @@ html {
     transform: rotate(90deg);
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
+/* .gallery-grid first definition removed — the split-view flex definition below is the authoritative one */
 
 .gallery-grid-item {
     position: relative;
@@ -1542,11 +1518,7 @@ html {
 }
 
 @media (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
-        padding: 15px;
-    }
+    /* grid-template-columns rule removed — .gallery-grid is now flex, not grid */
 
     .gallery-modal-content {
         padding: 20px;
@@ -1558,15 +1530,7 @@ html {
 }
 
 /* Split View Gallery Styles (Moved from index.html) */
-.gallery-modal {
-    display: none;
-    /* Default state */
-}
-
-.gallery-modal.active {
-    display: flex;
-    /* Override block from previous styles if needed */
-}
+/* .gallery-modal duplicate block removed — consolidated into the block above */
 
 .gallery-modal-content {
     display: flex;
